@@ -9,8 +9,8 @@ namespace backendFF.Models
     {
         public int ID { get; set; }
         public string? Name { get; set; }
-        public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
         public string? Salt { get; set; }
         public string? Hash { get; set; }
         public int OrganizationID { get; set; }
