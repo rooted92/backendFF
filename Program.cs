@@ -1,6 +1,17 @@
+using backendFF.Services;
+using backendFF.Services.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<OrganizationService>();
+builder.Services.AddScoped<YardsService>();
+builder.Services.AddScoped<TrailerService>();
+builder.Services.AddScoped<UpdateLogService>();
+
+var connectionString = builder.Configuration.GetConnectionString("FleetTrackerString");
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

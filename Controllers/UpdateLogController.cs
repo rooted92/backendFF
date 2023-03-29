@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backendFF.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UpdateLogController : ControllerBase
     {
         
