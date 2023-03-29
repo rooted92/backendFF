@@ -1,5 +1,6 @@
 using backendFF.Services;
 using backendFF.Services.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
