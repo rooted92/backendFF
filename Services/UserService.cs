@@ -121,7 +121,7 @@ namespace backendFF.Services
             return _context.SaveChanges() != 0;
         }
 
-        public bool UpdateEmail(int id, string email)
+        public bool UpdateUserEmail(int id, string email)
         {
             UserModel foundUser = GetUserById(id);
             bool result = false;
@@ -146,7 +146,7 @@ namespace backendFF.Services
             return _context.UserInfo.Where(item => item.OrganizationID == organizationID);
         }
 
-        public bool UpdatePassword(int id, string password)
+        public bool UpdateUserPassword(int id, string password)
         {
             UserModel foundUser = GetUserById(id);
             bool result = false;
@@ -163,7 +163,7 @@ namespace backendFF.Services
             return result;
         }
 
-        public bool UpdateDarkMode(int id, bool isDarkMode)
+        public bool UpdateUserDarkMode(int id, bool isDarkMode)
         {
             UserModel foundUser = GetUserById(id);
             bool result = false;

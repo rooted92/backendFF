@@ -19,7 +19,7 @@ namespace backendFF.Controllers
             _data = dataFromService;
         }
 
-        // Add user
+        // Add User
         [HttpPost]
         [Route("AddUser")]
         public bool AddUser(CreateAccountDTO userToAdd)
@@ -35,7 +35,7 @@ namespace backendFF.Controllers
             return _data.Login(user);
         }
 
-        // Update user
+        // Update User
         [HttpPost]
         [Route("UpdateUser")]
         public bool UpdateUser(UserModel userToUpdate)
@@ -43,20 +43,28 @@ namespace backendFF.Controllers
             return _data.UpdateUser(userToUpdate);
         }
 
-        // Update user password
+        // Update User Email
         [HttpPost]
-        [Route("UpdateUser/{id}/{password}")]
-        public bool UpdateUser(int id, string password)
+        [Route("UpdateUserEmail/{id}/{email}")]
+        public bool UpdateUserEmail(int id, string email)
         {
-            return _data.UpdatePassword(id, password);
+            return _data.UpdateUserEmail(id, email);
         }
 
-        // Update user dark mode setting
+        // Update User Password
         [HttpPost]
-        [Route("UpdateUser/{id}/{isDarkMode}")]
-        public bool UpdateUser(int id, bool isDarkMode)
+        [Route("UpdateUserPassword/{id}/{password}")]
+        public bool UpdateUserPassword(int id, string password)
         {
-            return _data.UpdateDarkMode(id, isDarkMode);
+            return _data.UpdateUserPassword(id, password);
+        }
+
+        // Update User Dark Mode Setting
+        [HttpPost]
+        [Route("UpdateUserDarkMode/{id}/{isDarkMode}")]
+        public bool UpdateUserDarkMode(int id, bool isDarkMode)
+        {
+            return _data.UpdateUserDarkMode(id, isDarkMode);
         }
 
         // Delete User Account (soft delete)
