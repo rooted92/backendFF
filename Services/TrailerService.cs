@@ -17,7 +17,7 @@ namespace backendFF.Services
 
         public bool AddTrailer(TrailerModel newTrailer)
         {
-            _context.Add(newTrailer);
+            _context.TrailerInfo.Add(newTrailer);
             return _context.SaveChanges() != 0;
         }
 
@@ -49,12 +49,47 @@ namespace backendFF.Services
 
         public bool UpdateTrailerToInTransit(TrailerModel trailerToUpdate, int driverID)
         {
+            bool result = false;
+
+            int yardID = trailerToUpdate.PossessionID;
             trailerToUpdate.PossessionID = driverID;
             trailerToUpdate.InTransit = true;
-            return UpdateTrailer(trailerToUpdate);
+
+            UpdateLogModel newUpdate = new UpdateLogModel();
+            newUpdate.YardID = yardID;
+            newUpdate.DriverID = driverID;
+            newUpdate.DateUpdated = DateTime.Now;
+
+            _context.UpdateLog.Add(newUpdate);
+            if(_context.SaveChanges() != 0)
+            {
+                result = UpdateTrailer(trailerToUpdate);
+            }
+            
+            return result;
         }
 
+        public bool UpdateTrailerToYard(TrailerModel trailerToUpdate, int yardID)
+        {
+            bool result = false;
 
+            int driverID = trailerToUpdate.PossessionID;
+            trailerToUpdate.PossessionID = yardID;
+            trailerToUpdate.InTransit = true;
+
+            UpdateLogModel newUpdate = new UpdateLogModel();
+            newUpdate.YardID = yardID;
+            newUpdate.DriverID = driverID;
+            newUpdate.DateUpdated = DateTime.Now;
+
+            _context.UpdateLog.Add(newUpdate);
+            if(_context.SaveChanges() != 0)
+            {
+                result = UpdateTrailer(trailerToUpdate);
+            }
+            
+            return result;
+        }
 
         public bool DeleteTrailer(TrailerModel trailerToDelete)
         {

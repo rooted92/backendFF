@@ -48,6 +48,7 @@ namespace backendFF.Services
                 newUser.OrganizationID = userToAdd.OrganizationID;
                 newUser.AccountType = userToAdd.AccountType;
                 newUser.IsDarkMode = userToAdd.IsDarkMode;
+                newUser.IsDeleted = userToAdd.IsDeleted;
                 // adding newUser to our database
                 _context.Add(newUser);
                 result = _context.SaveChanges() != 0;

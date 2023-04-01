@@ -68,6 +68,13 @@ namespace backendFF.Controllers
         }
 
         [HttpPost]
+        [Route("UpdateTrailerToYard/{yardID}")]
+        public bool UpdateTrailerToYard(TrailerModel trailerToUpdate, int yardID)
+        {
+            return _data.UpdateTrailerToYard(trailerToUpdate, yardID);
+        }
+
+        [HttpPost]
         [Route("DeleteTrailer")]
         public bool DeleteTrailer(TrailerModel trailerToDelete)
         {

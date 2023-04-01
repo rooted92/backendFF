@@ -14,6 +14,7 @@ namespace backendFF.Models.DTO
         public int OrganizationID { get; set; }
         public string? AccountType { get; set; }
         public bool IsDarkMode { get; set; }
+        public bool IsDeleted { get; set; }
         public string? Password { get; set; }
     }
 }
