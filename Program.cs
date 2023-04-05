@@ -14,6 +14,15 @@ builder.Services.AddScoped<UpdateLogService>();
 var connectionString = builder.Configuration.GetConnectionString("FleetTrackerString");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("FleetFinderPolicy",
+    builder => {
+        builder.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -29,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
+
+app.UseCors("FleetFinderPolicy");
 
 app.UseAuthorization();
 
