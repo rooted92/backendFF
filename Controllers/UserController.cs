@@ -75,6 +75,13 @@ namespace backendFF.Controllers
             return _data.DeleteUser(userToDelete);
         }
 
+        [HttpGet]
+        [Route("GetUserByEmail/{email}")]
+        public UserModel GetUserByEmail(string email)
+        {
+            return _data.GetUserByEmail(email);
+        }
+
         // Get All Users in Organization
         [HttpGet]
         [Route("GetUsersByOrganizationId/{organizationID}")]

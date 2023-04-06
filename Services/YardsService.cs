@@ -41,8 +41,7 @@ namespace backendFF.Services
         public bool DeleteYard(YardModel yardToDelete)
         {
             yardToDelete.IsDeleted = true;
-            _context.Update<YardModel>(yardToDelete);
-            return _context.SaveChanges() != 0;
+            return UpdateYard(yardToDelete);
         }
     }
 }

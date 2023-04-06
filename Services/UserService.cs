@@ -124,8 +124,11 @@ namespace backendFF.Services
 
         public bool UpdateUserEmail(int id, string email)
         {
-            UserModel foundUser = GetUserById(id);
             bool result = false;
+            if(GetUserByEmail(email) != null) {
+                return false;
+            }
+            UserModel foundUser = GetUserById(id);
             if(foundUser != null)
             {
                 foundUser.Email = email;

@@ -85,8 +85,7 @@ namespace backendFF.Services
         public bool DeleteOrganization(OrganizationModel organizationToDelete)
         {
             organizationToDelete.IsDeleted = true;
-            _context.Update<OrganizationModel>(organizationToDelete);
-            return _context.SaveChanges() != 0;
+            return UpdateOrganization(organizationToDelete);
         }
     }
 }

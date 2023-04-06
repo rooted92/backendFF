@@ -15,7 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("FleetTrackerSt
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("FleetFinderPolicy",
+    options.AddPolicy(name: "FleetFinderPolicy",
     builder => {
         builder.WithOrigins("http://localhost:3000")
         .AllowAnyHeader()
