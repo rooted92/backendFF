@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backendFF.Models;
+using backendFF.Models.DTO;
 using backendFF.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddOrganization")]
-        public bool AddOrganization(OrganizationModel newOrganization)
+        public bool AddOrganization(CreateOrganizationDTO newOrganization)
         {
             return _data.AddOrganization(newOrganization);
         }

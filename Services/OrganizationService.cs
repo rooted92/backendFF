@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backendFF.Models;
+using backendFF.Models.DTO;
 using backendFF.Services.Context;
 
 namespace backendFF.Services
@@ -25,9 +26,10 @@ namespace backendFF.Services
             return _context.OrganizationInfo.SingleOrDefault(organization => organization.JoinCode == joinCode) != null;
         }
 
-         public bool AddOrganization(OrganizationModel newOrganization)
+         public bool AddOrganization(CreateOrganizationDTO newOrganization)
         {
             bool result = false;
+            OrganizationModel createdOrganization = new OrganizationModel();
 
             if(!DoesOrganizationExist(newOrganization.Name))
             {
@@ -36,11 +38,14 @@ namespace backendFF.Services
                 {
                     Random r = new Random();
                     int x = r.Next(0, 1000000);
-                    newOrganization.JoinCode = x.ToString("000000");
-                    codeExists = DoesOrganizationJoinCodeExist(newOrganization.JoinCode);
+                    createdOrganization.JoinCode = x.ToString("000000");
+                    codeExists = DoesOrganizationJoinCodeExist(createdOrganization.JoinCode);
                 }
+                createdOrganization.ID = 0;
+                createdOrganization.Name = newOrganization.Name;
+                createdOrganization.IsDeleted = false;
                 
-                _context.Add(newOrganization);
+                _context.Add(createdOrganization);
 
                 result = _context.SaveChanges() != 0;
             }
