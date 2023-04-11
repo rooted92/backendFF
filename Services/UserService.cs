@@ -47,8 +47,8 @@ namespace backendFF.Services
                 newUser.PhoneNumber = userToAdd.PhoneNumber;
                 newUser.OrganizationID = userToAdd.OrganizationID;
                 newUser.AccountType = userToAdd.AccountType;
-                newUser.IsDarkMode = userToAdd.IsDarkMode;
-                newUser.IsDeleted = userToAdd.IsDeleted;
+                newUser.IsDarkMode = false;
+                newUser.IsDeleted = false;
                 // adding newUser to our database
                 _context.Add(newUser);
                 result = _context.SaveChanges() != 0;
