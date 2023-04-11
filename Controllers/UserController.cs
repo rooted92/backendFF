@@ -35,6 +35,14 @@ namespace backendFF.Controllers
             return _data.Login(user);
         }
 
+        // Get User Info After Login
+        [HttpGet]
+        [Route("GetUserInfo/{id}")]
+        public UserInfoDTO GetUserInfo(int id)
+        {
+            return _data.GetUserInfo(id);
+        }
+
         // Update User
         [HttpPost]
         [Route("UpdateUser")]
@@ -89,5 +97,6 @@ namespace backendFF.Controllers
         {
             return _data.GetUsersByOrganizationId(organizationID);
         }
+
     }
 }

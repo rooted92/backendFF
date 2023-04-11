@@ -111,6 +111,21 @@ namespace backendFF.Services
             return result;
         }
 
+        public UserInfoDTO GetUserInfo(int id)
+        {
+            UserModel foundUser = GetUserById(id);
+            UserInfoDTO userInfo = new UserInfoDTO();
+            userInfo.ID = foundUser.ID;
+            userInfo.Name = foundUser.Name;
+            userInfo.Email = foundUser.Email;
+            userInfo.PhoneNumber = foundUser.PhoneNumber;
+            userInfo.OrganizationID = foundUser.OrganizationID;
+            userInfo.AccountType = foundUser.AccountType;
+            userInfo.IsDarkMode = foundUser.IsDarkMode;
+
+            return userInfo;
+        }
+
         public UserModel GetUserByEmail(string? email)
         {
             return _context.UserInfo.SingleOrDefault(user => user.Email == email);
