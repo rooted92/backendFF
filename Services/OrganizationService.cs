@@ -18,7 +18,7 @@ namespace backendFF.Services
 
         public bool DoesOrganizationExist(string? name)
         {
-            return _context.OrganizationInfo.SingleOrDefault(organization => organization.Name == name) != null;
+            return _context.OrganizationInfo.SingleOrDefault(organization => organization.Name == name && !organization.IsDeleted) != null;
         }
 
         public bool DoesOrganizationJoinCodeExist(string joinCode)
