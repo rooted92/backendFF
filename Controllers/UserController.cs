@@ -37,10 +37,10 @@ namespace backendFF.Controllers
 
         // Get User Info After Login
         [HttpGet]
-        [Route("GetUserInfo/{id}")]
-        public UserInfoDTO GetUserInfo(int id)
+        [Route("GetUserInfo/{email}")]
+        public UserInfoDTO GetUserInfo(string email)
         {
-            return _data.GetUserInfo(id);
+            return _data.GetUserInfo(email);
         }
 
         // Update User

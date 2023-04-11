@@ -24,7 +24,7 @@ namespace backendFF.Services
 
         public bool DoesUserExist(string? email)
         {
-            return _context.UserInfo.SingleOrDefault(user => user.Email == email) != null;
+            return _context.UserInfo.SingleOrDefault(user => user.Email == email && !user.IsDeleted) != null;
         }
 
         public bool AddUser(CreateAccountDTO userToAdd)
@@ -111,9 +111,9 @@ namespace backendFF.Services
             return result;
         }
 
-        public UserInfoDTO GetUserInfo(int id)
+        public UserInfoDTO GetUserInfo(string email)
         {
-            UserModel foundUser = GetUserById(id);
+            UserModel foundUser = GetUserByEmail(email);
             UserInfoDTO userInfo = new UserInfoDTO();
             userInfo.ID = foundUser.ID;
             userInfo.Name = foundUser.Name;
@@ -128,7 +128,7 @@ namespace backendFF.Services
 
         public UserModel GetUserByEmail(string? email)
         {
-            return _context.UserInfo.SingleOrDefault(user => user.Email == email);
+            return _context.UserInfo.SingleOrDefault(user => user.Email == email && !user.IsDeleted);
         }
 
         public bool UpdateUser(UserModel userToUpdate)
@@ -157,7 +157,7 @@ namespace backendFF.Services
 
         public UserModel GetUserById(int id)
         {
-            return _context.UserInfo.SingleOrDefault(user => user.ID == id);
+            return _context.UserInfo.SingleOrDefault(user => user.ID == id && !user.IsDeleted);
         }
 
         public IEnumerable<UserModel> GetUsersByOrganizationId(int organizationID)
