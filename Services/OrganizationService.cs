@@ -58,11 +58,6 @@ namespace backendFF.Services
             return _context.OrganizationInfo.Where(organization => organization.ID == ID);
         }
 
-        public IEnumerable<OrganizationModel> GetOrganizationByOwnerUserID(int ownerUserID)
-        {
-            return _context.OrganizationInfo.Where(organization => organization.OwnerUserID == ownerUserID);
-        }
-
         public IEnumerable<OrganizationModel> GetOrganizationByMemberUserID(int memberUserID)
         {
             UserModel memberUser = _context.UserInfo.SingleOrDefault(user => user.ID == memberUserID);

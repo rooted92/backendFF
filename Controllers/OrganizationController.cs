@@ -40,13 +40,6 @@ namespace backendFF.Controllers
         }
 
         [HttpGet]
-        [Route("GetOrganizationByOwnerUserID/{ownerUserID}")]
-        public IEnumerable<OrganizationModel> GetOrganizationByOwnerUserID(int ownerUserID)
-        {
-            return _data.GetOrganizationByOwnerUserID(ownerUserID);
-        }
-
-        [HttpGet]
         [Route("GetOrganizationByMemberUserID/{memberUserID}")]
         public IEnumerable<OrganizationModel> GetOrganizationByMemberUserID(int memberUserID)
         {
