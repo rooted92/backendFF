@@ -51,7 +51,7 @@ namespace backendFF.Services
                 // create our salt and hash password
                 var hashPassword = HashPassword(userToAdd.Password);
 
-                newUser.ID = userToAdd.ID;
+                newUser.ID = 0;
                 newUser.Name = userToAdd.Name;
                 newUser.Email = userToAdd.Email;
                 newUser.Salt = hashPassword.Salt;
