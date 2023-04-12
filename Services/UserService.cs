@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using backendFF.Controllers;
 using backendFF.Models;
 using backendFF.Models.DTO;
 using backendFF.Services.Context;
@@ -27,13 +28,24 @@ namespace backendFF.Services
             return _context.UserInfo.SingleOrDefault(user => user.Email == email && !user.IsDeleted) != null;
         }
 
-        public bool AddUser(CreateAccountDTO userToAdd)
+        public OrganizationModel GetOrganizationByJoinCode(string joinCode)
         {
+            return _context.OrganizationInfo.SingleOrDefault(organization => organization.JoinCode == joinCode);
+        }
+
+        public string AddUser(CreateAccountDTO userToAdd)
+        {
+            OrganizationModel foundOrg = GetOrganizationByJoinCode(userToAdd.OrganizationJoinCode);
+            if(foundOrg == null)
+            {
+                return "Incorrect Organization Code";
+            }
             // if the user already exists
-            bool result = false;
+            string result = "User Already Exists";
             // if they do not exist we can then have the account be created
             if(!DoesUserExist(userToAdd.Email))
             {
+                
                 // creating a new instance of user model (empty object)
                 UserModel newUser = new UserModel();
                 // create our salt and hash password
@@ -45,13 +57,20 @@ namespace backendFF.Services
                 newUser.Salt = hashPassword.Salt;
                 newUser.Hash = hashPassword.Hash;
                 newUser.PhoneNumber = userToAdd.PhoneNumber;
-                newUser.OrganizationID = userToAdd.OrganizationID;
+                newUser.OrganizationID = foundOrg.ID;
                 newUser.AccountType = userToAdd.AccountType;
                 newUser.IsDarkMode = false;
                 newUser.IsDeleted = false;
                 // adding newUser to our database
                 _context.Add(newUser);
-                result = _context.SaveChanges() != 0;
+                if(_context.SaveChanges() != 0)
+                {
+                    result = "User Account Created";
+                }
+                else
+                {
+                    result = "Error Nothing Saved To Table";
+                }
             }
 
             return result;

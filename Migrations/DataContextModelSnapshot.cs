@@ -39,9 +39,6 @@ namespace backendFF.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OwnerUserID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.ToTable("OrganizationInfo");

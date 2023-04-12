@@ -10,7 +10,7 @@ namespace backendFF.Services
 {
     public class OrganizationService
     {
-         private readonly DataContext _context; 
+        private readonly DataContext _context; 
         public OrganizationService(DataContext context)
         {
             _context = context;

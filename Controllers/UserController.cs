@@ -22,7 +22,7 @@ namespace backendFF.Controllers
         // Add User
         [HttpPost]
         [Route("AddUser")]
-        public bool AddUser(CreateAccountDTO userToAdd)
+        public string AddUser(CreateAccountDTO userToAdd)
         {
             return _data.AddUser(userToAdd);
         }

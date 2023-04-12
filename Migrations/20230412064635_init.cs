@@ -17,7 +17,6 @@ namespace backendFF.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OwnerUserID = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JoinCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)

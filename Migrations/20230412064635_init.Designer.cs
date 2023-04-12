@@ -12,7 +12,7 @@ using backendFF.Services.Context;
 namespace backendFF.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230404204044_init")]
+    [Migration("20230412064635_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -41,9 +41,6 @@ namespace backendFF.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OwnerUserID")
-                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
