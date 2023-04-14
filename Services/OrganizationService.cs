@@ -26,9 +26,8 @@ namespace backendFF.Services
             return _context.OrganizationInfo.SingleOrDefault(organization => organization.JoinCode == joinCode) != null;
         }
 
-         public bool AddOrganization(CreateOrganizationDTO newOrganization)
+         public OrganizationModel AddOrganization(CreateOrganizationDTO newOrganization)
         {
-            bool result = false;
             OrganizationModel createdOrganization = new OrganizationModel();
 
             if(!DoesOrganizationExist(newOrganization.Name))
@@ -47,10 +46,13 @@ namespace backendFF.Services
                 
                 _context.Add(createdOrganization);
 
-                result = _context.SaveChanges() != 0;
+                if(_context.SaveChanges() == 0)
+                {
+                    return null;
+                }
             }
 
-            return result;
+            return createdOrganization;
         }
 
         public IEnumerable<OrganizationModel> GetAllOrganizations()
@@ -58,21 +60,21 @@ namespace backendFF.Services
             return _context.OrganizationInfo;
         }
 
-        public IEnumerable<OrganizationModel> GetOrganizationByID(int ID)
+        public OrganizationModel GetOrganizationByID(int ID)
         {
-            return _context.OrganizationInfo.Where(organization => organization.ID == ID);
+            return _context.OrganizationInfo.SingleOrDefault(organization => organization.ID == ID && !organization.IsDeleted);
         }
 
-        public IEnumerable<OrganizationModel> GetOrganizationByMemberUserID(int memberUserID)
+        public OrganizationModel GetOrganizationByMemberUserID(int memberUserID)
         {
             UserModel memberUser = _context.UserInfo.SingleOrDefault(user => user.ID == memberUserID);
 
             return GetOrganizationByID(memberUser.OrganizationID);
         }
 
-        public IEnumerable<OrganizationModel> GetOrganizationByJoinCode(string joinCode)
+        public OrganizationModel GetOrganizationByJoinCode(string joinCode)
         {
-            return _context.OrganizationInfo.Where(organization => organization.JoinCode == joinCode);
+            return _context.OrganizationInfo.SingleOrDefault(organization => organization.JoinCode == joinCode && !organization.IsDeleted);
         }
 
         public bool UpdateOrganization(OrganizationModel organizationToUpdate)
@@ -81,7 +83,7 @@ namespace backendFF.Services
             
             return _context.SaveChanges() != 0;
         }
-
+ 
         public bool DeleteOrganization(OrganizationModel organizationToDelete)
         {
             organizationToDelete.IsDeleted = true;

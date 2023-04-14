@@ -21,7 +21,7 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddOrganization")]
-        public bool AddOrganization(CreateOrganizationDTO newOrganization)
+        public OrganizationModel AddOrganization(CreateOrganizationDTO newOrganization)
         {
             return _data.AddOrganization(newOrganization);
         }
@@ -35,21 +35,21 @@ namespace backendFF.Controllers
 
         [HttpGet]
         [Route("GetOrganizationByID/{organizationID}")]
-        public IEnumerable<OrganizationModel> GetOrganizationByID(int organizationID)
+        public OrganizationModel GetOrganizationByID(int organizationID)
         {
             return _data.GetOrganizationByID(organizationID);
         }
 
         [HttpGet]
         [Route("GetOrganizationByMemberUserID/{memberUserID}")]
-        public IEnumerable<OrganizationModel> GetOrganizationByMemberUserID(int memberUserID)
+        public OrganizationModel GetOrganizationByMemberUserID(int memberUserID)
         {
             return _data.GetOrganizationByMemberUserID(memberUserID);
         }
 
         [HttpGet]
         [Route("GetOrganizationByJoinCode/{joinCode}")]
-        public IEnumerable<OrganizationModel> GetOrganizationByJoinCode(string joinCode)
+        public OrganizationModel GetOrganizationByJoinCode(string joinCode)
         {
             return _data.GetOrganizationByJoinCode(joinCode);
         }
