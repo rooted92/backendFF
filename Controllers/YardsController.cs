@@ -19,10 +19,10 @@ namespace backendFF.Controllers
         }
 
         [HttpPost]
-        [Route("AddYard")]
-        public bool AddYard(YardModel newYard)
+        [Route("AddYard/{userID}")]
+        public bool AddYard(YardModel newYard, int userID)
         {
-            return _data.AddYard(newYard);
+            return _data.AddYard(newYard, userID);
         }
 
         [HttpGet]
@@ -40,17 +40,17 @@ namespace backendFF.Controllers
         }
 
         [HttpPost]
-        [Route("UpdateYard")]
-        public bool UpdateYard(YardModel yardToUpdate)
+        [Route("UpdateYard/{userID}")]
+        public bool UpdateYard(YardModel yardToUpdate, int userID)
         {
-            return _data.UpdateYard(yardToUpdate);
+            return _data.UpdateYard(yardToUpdate, userID);
         }
 
         [HttpPost]
-        [Route("DeleteYard")]
-        public bool DeleteYard(YardModel yardToDelete)
+        [Route("DeleteYard/{userID}")]
+        public bool DeleteYard(YardModel yardToDelete, int userID)
         {
-            return _data.DeleteYard(yardToDelete);
+            return _data.DeleteYard(yardToDelete, userID);
         }
     }
 }

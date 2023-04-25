@@ -9,8 +9,10 @@ namespace backendFF.Models
     {
         public int ID { get; set; }
         public int YardID { get; set; }
-        public int DriverID { get; set; }
-        public DateTime DateUpdated { get; set; }
+        public int UserID { get; set; }
+        public int OrganizationID { get; set; }
+        public long DateUpdated { get; set; }
+        public string? Details { get; set; }
 
         public UpdateLogModel() { }
     }

@@ -15,7 +15,7 @@ namespace backendFF.Services
             _context = context;
         }
 
-        public bool AddUpdate(UpdateLogService newUpdate)
+        public bool AddUpdate(UpdateLogModel newUpdate)
         {
             _context.Add(newUpdate);
             return _context.SaveChanges() != 0;
@@ -36,9 +36,9 @@ namespace backendFF.Services
             return _context.UpdateLog.Last(update => update.YardID == yardID);
         }
 
-        public IEnumerable<UpdateLogModel> GetUpdatesByDriverID(int driverID)
+        public IEnumerable<UpdateLogModel> GetUpdatesByUserID(int userID)
         {
-            return _context.UpdateLog.Where(update => update.DriverID == driverID);
+            return _context.UpdateLog.Where(update => update.UserID == userID);
         }
     }
 }

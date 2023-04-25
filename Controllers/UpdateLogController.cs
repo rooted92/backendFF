@@ -20,7 +20,7 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddUpdate")]
-        public bool AddUpdate(UpdateLogService newUpdate)
+        public bool AddUpdate(UpdateLogModel newUpdate)
         {
             return _data.AddUpdate(newUpdate);
         }
@@ -47,10 +47,10 @@ namespace backendFF.Controllers
         }
 
         [HttpGet]
-        [Route("GetUpdatesByDriverID/{driverID}")]
-        public IEnumerable<UpdateLogModel> GetUpdatesByDriverID(int driverID)
+        [Route("GetUpdatesByUserID/{userID}")]
+        public IEnumerable<UpdateLogModel> GetUpdatesByUserID(int userID)
         {
-            return _data.GetUpdatesByDriverID(driverID);
+            return _data.GetUpdatesByUserID(userID);
         }
     }
 }

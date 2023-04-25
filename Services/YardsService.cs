@@ -15,11 +15,27 @@ namespace backendFF.Services
             _context = context;
         }
 
-        public bool AddYard(YardModel newYard)
+        public bool AddYard(YardModel newYard, int userID)
         {
-            _context.Add(newYard);
+            bool result = false;
 
-            return _context.SaveChanges() != 0;
+            UpdateLogModel newUpdate = new UpdateLogModel();
+            newUpdate.ID = 0;
+            newUpdate.YardID = newYard.ID;
+            newUpdate.UserID = userID;
+            newUpdate.OrganizationID = newYard.OrganizationID;
+            DateTime currentTime = DateTime.UtcNow;
+            newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+            newUpdate.Details = $"{newYard.Name} Created";
+
+            _context.UpdateLog.Add(newUpdate);
+            if(_context.SaveChanges() != 0)
+            {
+                _context.Add(newYard);
+                return _context.SaveChanges() != 0;
+            }
+
+            return result;
         }
 
         public IEnumerable<YardModel> GetAllYards()
@@ -32,16 +48,51 @@ namespace backendFF.Services
             return _context.YardInfo.Where(yard => yard.OrganizationID == organizationID);
         }
 
-        public bool UpdateYard(YardModel yardToUpdate)
+        public bool UpdateYard(YardModel yardToUpdate, int userID)
         {
-            _context.Update<YardModel>(yardToUpdate);
-            return _context.SaveChanges() != 0;
+            bool result = false;
+
+            UpdateLogModel newUpdate = new UpdateLogModel();
+            newUpdate.ID = 0;
+            newUpdate.YardID = yardToUpdate.ID;
+            newUpdate.UserID = userID;
+            newUpdate.OrganizationID = yardToUpdate.OrganizationID;
+            DateTime currentTime = DateTime.UtcNow;
+            newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+            newUpdate.Details = $"{yardToUpdate.Name} Updated";
+
+            _context.UpdateLog.Add(newUpdate);
+            if(_context.SaveChanges() != 0)
+            {
+                _context.Update<YardModel>(yardToUpdate);
+                return _context.SaveChanges() != 0;
+            }
+
+            return result;
         }
 
-        public bool DeleteYard(YardModel yardToDelete)
+        public bool DeleteYard(YardModel yardToDelete, int userID)
         {
             yardToDelete.IsDeleted = true;
-            return UpdateYard(yardToDelete);
+            bool result = false;
+
+            UpdateLogModel newUpdate = new UpdateLogModel();
+            newUpdate.ID = 0;
+            newUpdate.YardID = yardToDelete.ID;
+            newUpdate.UserID = userID;
+            newUpdate.OrganizationID = yardToDelete.OrganizationID;
+            DateTime currentTime = DateTime.UtcNow;
+            newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+            newUpdate.Details = $"{yardToDelete.Name} Deleted";
+
+            _context.UpdateLog.Add(newUpdate);
+            if(_context.SaveChanges() != 0)
+            {
+                _context.Update<YardModel>(yardToDelete);
+                return _context.SaveChanges() != 0;
+            }
+
+            return result;
         }
     }
 }

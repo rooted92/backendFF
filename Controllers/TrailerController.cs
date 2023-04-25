@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backendFF.Models;
+using backendFF.Models.DTO;
 using backendFF.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,10 +20,10 @@ namespace backendFF.Controllers
         }
 
         [HttpPost]
-        [Route("AddTrailer")]
-        public bool AddTrailer(TrailerModel newTrailer)
+        [Route("AddTrailer/{driverID}")]
+        public bool AddTrailer(CreateTrailerDTO trailerToAdd, int driverID)
         {
-            return _data.AddTrailer(newTrailer);
+            return _data.AddTrailer(trailerToAdd, driverID);
         }
 
         [HttpGet]
