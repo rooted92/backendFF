@@ -76,10 +76,10 @@ namespace backendFF.Controllers
         }
 
         [HttpPost]
-        [Route("DeleteTrailer")]
-        public bool DeleteTrailer(TrailerModel trailerToDelete)
+        [Route("DeleteTrailer/{userID}")]
+        public bool DeleteTrailer(TrailerModel trailerToDelete, int userID)
         {
-            return _data.DeleteTrailer(trailerToDelete);
+            return _data.DeleteTrailer(trailerToDelete, userID);
         }
 
     }

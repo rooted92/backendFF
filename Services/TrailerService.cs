@@ -134,10 +134,27 @@ namespace backendFF.Services
             return result;
         }
 
-        public bool DeleteTrailer(TrailerModel trailerToDelete)
+        public bool DeleteTrailer(TrailerModel trailerToDelete, int userID)
         {
             trailerToDelete.IsDeleted = true;
-            return UpdateTrailer(trailerToDelete);
+            bool result = false;
+
+            UpdateLogModel newUpdate = new UpdateLogModel();
+            newUpdate.ID = 0;
+            newUpdate.YardID = trailerToDelete.PossessionID;
+            newUpdate.UserID = userID;
+            newUpdate.OrganizationID = trailerToDelete.OrganizationID;
+            DateTime currentTime = DateTime.UtcNow;
+            newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+            newUpdate.Details = $"Trailer #{trailerToDelete.TrailerNumber} Deleted By {userID}";
+
+            _context.UpdateLog.Add(newUpdate);
+            if(_context.SaveChanges() != 0)
+            {
+                result = UpdateTrailer(trailerToDelete);
+            }
+            
+            return result;
         }
     }
 }
