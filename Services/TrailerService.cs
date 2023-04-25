@@ -61,17 +61,17 @@ namespace backendFF.Services
 
         public IEnumerable<TrailerModel> GetTrailersByPossessionID(int possessionID)
         {
-            return _context.TrailerInfo.Where(trailer => trailer.PossessionID == possessionID);
+            return _context.TrailerInfo.Where(trailer => trailer.PossessionID == possessionID && !trailer.IsDeleted);
         }
 
         public IEnumerable<TrailerModel> GetTrailersByOrganizationID(int organizationID)
         {
-            return _context.TrailerInfo.Where(trailer => trailer.OrganizationID == organizationID);
+            return _context.TrailerInfo.Where(trailer => trailer.OrganizationID == organizationID && !trailer.IsDeleted);
         }
 
         public IEnumerable<TrailerModel> GetTrailersInTransitByOrganizationID(int organizationID)
         {
-            return _context.TrailerInfo.Where(trailer => trailer.OrganizationID == organizationID && trailer.InTransit == true);
+            return _context.TrailerInfo.Where(trailer => trailer.OrganizationID == organizationID && trailer.InTransit == true && !trailer.IsDeleted);
         }
 
         public bool UpdateTrailer(TrailerModel trailerToUpdate)

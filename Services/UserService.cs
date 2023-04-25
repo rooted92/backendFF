@@ -30,7 +30,7 @@ namespace backendFF.Services
 
         public OrganizationModel GetOrganizationByJoinCode(string joinCode)
         {
-            return _context.OrganizationInfo.SingleOrDefault(organization => organization.JoinCode == joinCode);
+            return _context.OrganizationInfo.SingleOrDefault(organization => organization.JoinCode == joinCode && !organization.IsDeleted);
         }
 
         public string AddUser(CreateAccountDTO userToAdd)
@@ -181,7 +181,7 @@ namespace backendFF.Services
 
         public IEnumerable<UserModel> GetUsersByOrganizationId(int organizationID)
         {
-            return _context.UserInfo.Where(item => item.OrganizationID == organizationID);
+            return _context.UserInfo.Where(user => user.OrganizationID == organizationID && !user.IsDeleted);
         }
 
         public bool UpdateUserPassword(int id, string password)

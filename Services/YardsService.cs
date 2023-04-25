@@ -45,7 +45,7 @@ namespace backendFF.Services
 
         public IEnumerable<YardModel> GetAllYardsByOrganizationID(int organizationID)
         {
-            return _context.YardInfo.Where(yard => yard.OrganizationID == organizationID);
+            return _context.YardInfo.Where(yard => yard.OrganizationID == organizationID && !yard.IsDeleted);
         }
 
         public bool UpdateYard(YardModel yardToUpdate, int userID)
