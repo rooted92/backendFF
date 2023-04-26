@@ -47,6 +47,13 @@ namespace backendFF.Controllers
         }
 
         [HttpGet]
+        [Route("GetUpdatesByOrganizationID/{organizationID}")]
+        public IEnumerable<UpdateLogModel> GetUpdatesByOrganizationID(int organizationID)
+        {
+            return _data.GetUpdatesByOrganizationID(organizationID);
+        }
+
+        [HttpGet]
         [Route("GetUpdatesByUserID/{userID}")]
         public IEnumerable<UpdateLogModel> GetUpdatesByUserID(int userID)
         {

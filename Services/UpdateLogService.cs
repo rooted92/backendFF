@@ -36,6 +36,11 @@ namespace backendFF.Services
             return _context.UpdateLog.Last(update => update.YardID == yardID);
         }
 
+        public IEnumerable<UpdateLogModel> GetUpdatesByOrganizationID(int organizationID)
+        {
+            return _context.UpdateLog.Where(update => update.OrganizationID == organizationID);
+        }
+
         public IEnumerable<UpdateLogModel> GetUpdatesByUserID(int userID)
         {
             return _context.UpdateLog.Where(update => update.UserID == userID);
