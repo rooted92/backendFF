@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backendFF.Models;
+using backendFF.Models.DTO;
 using backendFF.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddYard/{userID}")]
-        public bool AddYard(YardModel newYard, int userID)
+        public bool AddYard(CreateYardDTO newYard, int userID)
         {
             return _data.AddYard(newYard, userID);
         }

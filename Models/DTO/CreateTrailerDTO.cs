@@ -16,7 +16,5 @@ namespace backendFF.Models.DTO
         public string? Details { get; set; }
         public int PossessionID { get; set; }
         public int OrganizationID { get; set; }
-
-        public CreateTrailerDTO() { }
     }
 }

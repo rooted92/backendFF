@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backendFF.Models;
+using backendFF.Models.DTO;
 using backendFF.Services.Context;
 
 namespace backendFF.Services
@@ -15,23 +16,24 @@ namespace backendFF.Services
             _context = context;
         }
 
-        public bool AddYard(YardModel newYard, int userID)
+        public bool AddYard(CreateYardDTO newYard, int userID)
         {
             bool result = false;
 
-            UpdateLogModel newUpdate = new UpdateLogModel();
-            newUpdate.ID = 0;
-            newUpdate.YardID = newYard.ID;
-            newUpdate.UserID = userID;
-            newUpdate.OrganizationID = newYard.OrganizationID;
-            DateTime currentTime = DateTime.UtcNow;
-            newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
-            newUpdate.Details = $"{newYard.Name} Created";
+            _context.Add(newYard);
 
-            _context.UpdateLog.Add(newUpdate);
             if(_context.SaveChanges() != 0)
             {
-                _context.Add(newYard);
+                UpdateLogModel newUpdate = new UpdateLogModel();
+                newUpdate.ID = 0;
+                newUpdate.YardID = _context.YardInfo.Last().ID;
+                newUpdate.UserID = userID;
+                newUpdate.OrganizationID = newYard.OrganizationID;
+                DateTime currentTime = DateTime.UtcNow;
+                newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+                newUpdate.Details = $"{newYard.Name} Created";
+                _context.UpdateLog.Add(newUpdate);
+
                 return _context.SaveChanges() != 0;
             }
 

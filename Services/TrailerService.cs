@@ -34,20 +34,22 @@ namespace backendFF.Services
             newTrailer.InTransit = false;
             newTrailer.IsDeleted = false;
 
-            UpdateLogModel newUpdate = new UpdateLogModel();
-            newUpdate.ID = 0;
-            newUpdate.YardID = newTrailer.PossessionID;
-            newUpdate.UserID = driverID;
-            newUpdate.OrganizationID = newTrailer.OrganizationID;
-            DateTime currentTime = DateTime.UtcNow;
-            newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
-            string yardName = _context.YardInfo.SingleOrDefault(yard => yard.ID == newTrailer.PossessionID).Name;
-            newUpdate.Details = $"Trailer #{newTrailer.TrailerNumber} Added to {yardName}";
+            _context.TrailerInfo.Add(newTrailer);
 
-            _context.UpdateLog.Add(newUpdate);
             if(_context.SaveChanges() != 0)
             {
-                _context.TrailerInfo.Add(newTrailer);
+                UpdateLogModel newUpdate = new UpdateLogModel();
+                newUpdate.ID = 0;
+                newUpdate.YardID = newTrailer.PossessionID;
+                newUpdate.UserID = driverID;
+                newUpdate.OrganizationID = newTrailer.OrganizationID;
+                DateTime currentTime = DateTime.UtcNow;
+                newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+                string yardName = _context.YardInfo.SingleOrDefault(yard => yard.ID == newTrailer.PossessionID).Name;
+                newUpdate.Details = $"Trailer #{newTrailer.TrailerNumber} Added to {yardName}";
+
+                _context.UpdateLog.Add(newUpdate);
+
                 return _context.SaveChanges() != 0;
             }
             
