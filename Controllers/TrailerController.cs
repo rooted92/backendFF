@@ -21,7 +21,7 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddTrailer/{driverID}")]
-        public bool AddTrailer(CreateTrailerDTO trailerToAdd, int driverID)
+        public bool AddTrailer([FromBody]CreateTrailerDTO trailerToAdd, [FromRoute]int driverID)
         {
             return _data.AddTrailer(trailerToAdd, driverID);
         }
@@ -63,21 +63,21 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("UpdateTrailerToInTransit/{driverID}")]
-        public bool UpdateTrailerToInTransit(TrailerModel trailerToUpdate, int driverID)
+        public bool UpdateTrailerToInTransit([FromBody]TrailerModel trailerToUpdate, [FromRoute]int driverID)
         {
             return _data.UpdateTrailerToInTransit(trailerToUpdate, driverID);
         }
 
         [HttpPost]
         [Route("UpdateTrailerToYard/{yardID}")]
-        public bool UpdateTrailerToYard(TrailerModel trailerToUpdate, int yardID)
+        public bool UpdateTrailerToYard([FromBody]TrailerModel trailerToUpdate, [FromRoute]int yardID)
         {
             return _data.UpdateTrailerToYard(trailerToUpdate, yardID);
         }
 
         [HttpPost]
         [Route("DeleteTrailer/{userID}")]
-        public bool DeleteTrailer(TrailerModel trailerToDelete, int userID)
+        public bool DeleteTrailer([FromBody]TrailerModel trailerToDelete, [FromRoute]int userID)
         {
             return _data.DeleteTrailer(trailerToDelete, userID);
         }

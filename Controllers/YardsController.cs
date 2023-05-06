@@ -42,14 +42,14 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("UpdateYard/{userID}")]
-        public bool UpdateYard(YardModel yardToUpdate, int userID)
+        public bool UpdateYard([FromBody]YardModel yardToUpdate, [FromRoute]int userID)
         {
             return _data.UpdateYard(yardToUpdate, userID);
         }
 
         [HttpPost]
         [Route("DeleteYard/{userID}")]
-        public bool DeleteYard(YardModel yardToDelete, int userID)
+        public bool DeleteYard([FromBody]YardModel yardToDelete, [FromRoute]int userID)
         {
             return _data.DeleteYard(yardToDelete, userID);
         }
