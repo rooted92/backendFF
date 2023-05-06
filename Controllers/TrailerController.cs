@@ -41,6 +41,13 @@ namespace backendFF.Controllers
         }
 
         [HttpGet]
+        [Route("GetTrailersByYardID/{yardID}")]
+        public IEnumerable<TrailerModel> GetTrailersByYardID(int yardID)
+        {
+            return _data.GetTrailersByYardID(yardID);
+        }
+
+        [HttpGet]
         [Route("GetTrailersByOrganizationID/{organizationID}")]
         public IEnumerable<TrailerModel> GetTrailersByOrganizationID(int organizationID)
         {
