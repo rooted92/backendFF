@@ -21,7 +21,7 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddYard/{userID}")]
-        public bool AddYard(CreateYardDTO newYard, int userID)
+        public bool AddYard([FromRoute]int userID, [FromBody]CreateYardDTO newYard)
         {
             return _data.AddYard(newYard, userID);
         }

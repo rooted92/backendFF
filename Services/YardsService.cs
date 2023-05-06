@@ -11,33 +11,37 @@ namespace backendFF.Services
     public class YardsService
     {
         private readonly DataContext _context;
-        public YardsService(DataContext context)
+        private readonly UpdateLogService _service;
+        public YardsService(DataContext context, UpdateLogService service)
         {
             _context = context;
+            _service = service;
         }
 
         public bool AddYard(CreateYardDTO newYard, int userID)
         {
-            bool result = false;
+            YardModel yardToAdd = new YardModel();
+            yardToAdd.ID = 0;
+            yardToAdd.Name = newYard.Name;
+            yardToAdd.Address = newYard.Address;
+            yardToAdd.City = newYard.City;
+            yardToAdd.State = newYard.State;
+            yardToAdd.Zipcode = newYard.Zipcode;
+            yardToAdd.OrganizationID = newYard.OrganizationID;
+            yardToAdd.IsDeleted = false;
 
-            _context.Add(newYard);
+            _context.Add(yardToAdd);
+            _context.SaveChanges();
 
-            if(_context.SaveChanges() != 0)
-            {
                 UpdateLogModel newUpdate = new UpdateLogModel();
                 newUpdate.ID = 0;
-                newUpdate.YardID = _context.YardInfo.Last().ID;
+                newUpdate.YardID = _context.YardInfo.Count();
                 newUpdate.UserID = userID;
                 newUpdate.OrganizationID = newYard.OrganizationID;
                 DateTime currentTime = DateTime.UtcNow;
                 newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
                 newUpdate.Details = $"{newYard.Name} Created";
-                _context.UpdateLog.Add(newUpdate);
-
-                return _context.SaveChanges() != 0;
-            }
-
-            return result;
+                return _service.AddUpdate(newUpdate);
         }
 
         public IEnumerable<YardModel> GetAllYards()
@@ -64,7 +68,7 @@ namespace backendFF.Services
             newUpdate.Details = $"{yardToUpdate.Name} Updated";
 
             _context.UpdateLog.Add(newUpdate);
-            if(_context.SaveChanges() != 0)
+            if (_context.SaveChanges() != 0)
             {
                 _context.Update<YardModel>(yardToUpdate);
                 return _context.SaveChanges() != 0;
@@ -88,7 +92,7 @@ namespace backendFF.Services
             newUpdate.Details = $"{yardToDelete.Name} Deleted";
 
             _context.UpdateLog.Add(newUpdate);
-            if(_context.SaveChanges() != 0)
+            if (_context.SaveChanges() != 0)
             {
                 _context.Update<YardModel>(yardToDelete);
                 return _context.SaveChanges() != 0;

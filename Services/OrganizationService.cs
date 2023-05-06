@@ -26,7 +26,7 @@ namespace backendFF.Services
             return _context.OrganizationInfo.SingleOrDefault(organization => organization.JoinCode == joinCode) != null;
         }
 
-         public OrganizationModel AddOrganization(CreateOrganizationDTO newOrganization)
+        public OrganizationModel? AddOrganization(CreateOrganizationDTO newOrganization)
         {
             OrganizationModel createdOrganization = new OrganizationModel();
 
@@ -46,13 +46,13 @@ namespace backendFF.Services
                 
                 _context.Add(createdOrganization);
 
-                if(_context.SaveChanges() == 0)
+                if(_context.SaveChanges() != 0)
                 {
-                    return null;
+                    return createdOrganization;
                 }
             }
 
-            return createdOrganization;
+            return null;
         }
 
         public IEnumerable<OrganizationModel> GetAllOrganizations()

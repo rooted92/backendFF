@@ -21,7 +21,7 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddOrganization")]
-        public OrganizationModel AddOrganization(CreateOrganizationDTO newOrganization)
+        public OrganizationModel? AddOrganization(CreateOrganizationDTO newOrganization)
         {
             return _data.AddOrganization(newOrganization);
         }
