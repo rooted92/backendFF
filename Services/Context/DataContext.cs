@@ -14,6 +14,7 @@ namespace backendFF.Services.Context
         public DbSet<YardModel> YardInfo { get; set; }
         public DbSet<TrailerModel> TrailerInfo { get; set; }
         public DbSet<UpdateLogModel> UpdateLog { get; set; }
+        public DbSet<NotificationModel> NotificationInfo { get; set; }
         public DataContext(DbContextOptions options) : base(options)
         {
 

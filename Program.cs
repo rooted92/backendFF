@@ -10,6 +10,7 @@ builder.Services.AddScoped<OrganizationService>();
 builder.Services.AddScoped<YardsService>();
 builder.Services.AddScoped<TrailerService>();
 builder.Services.AddScoped<UpdateLogService>();
+builder.Services.AddScoped<NotificationService>();
 
 var connectionString = builder.Configuration.GetConnectionString("FleetTrackerString");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
