@@ -21,9 +21,9 @@ namespace backendFF.Controllers
 
         [HttpPost]
         [Route("AddTrailer/{driverID}")]
-        public bool AddTrailer([FromBody]CreateTrailerDTO trailerToAdd, [FromRoute]int driverID)
+        public bool AddTrailer([FromBody]List<CreateTrailerDTO> trailersToAdd, [FromRoute]int driverID)
         {
-            return _data.AddTrailer(trailerToAdd, driverID);
+            return _data.AddTrailer(trailersToAdd, driverID);
         }
 
         [HttpGet]

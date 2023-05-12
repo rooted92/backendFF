@@ -16,43 +16,48 @@ namespace backendFF.Services
             _context = context;
         }
 
-        public bool AddTrailer(CreateTrailerDTO trailerToAdd, int driverID)
+        public bool AddTrailer(List<CreateTrailerDTO> trailersToAdd, int driverID)
         {
             bool result = false;
 
-            TrailerModel newTrailer = new TrailerModel();
-            newTrailer.ID = 0;
-            newTrailer.TrailerNumber = trailerToAdd.TrailerNumber;
-            newTrailer.Type = trailerToAdd.Type;
-            newTrailer.Load = trailerToAdd.Load;
-            newTrailer.Cleanliness = trailerToAdd.Cleanliness;
-            newTrailer.FuelLevel = trailerToAdd.FuelLevel;
-            newTrailer.Length = trailerToAdd.Length;
-            newTrailer.Details = trailerToAdd.Details;
-            newTrailer.PossessionID = trailerToAdd.PossessionID;
-            newTrailer.OrganizationID = trailerToAdd.OrganizationID;
-            newTrailer.InTransit = false;
-            newTrailer.IsDeleted = false;
-
-            _context.TrailerInfo.Add(newTrailer);
-
-            if(_context.SaveChanges() != 0)
+            for (int i = 0; i < trailersToAdd.Count; i++)
             {
-                UpdateLogModel newUpdate = new UpdateLogModel();
-                newUpdate.ID = 0;
-                newUpdate.YardID = newTrailer.PossessionID;
-                newUpdate.UserID = driverID;
-                newUpdate.OrganizationID = newTrailer.OrganizationID;
-                DateTime currentTime = DateTime.UtcNow;
-                newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
-                string yardName = _context.YardInfo.SingleOrDefault(yard => yard.ID == newTrailer.PossessionID).Name;
-                newUpdate.Details = $"Trailer #{newTrailer.TrailerNumber} Added to {yardName}";
+                TrailerModel newTrailer = new TrailerModel();
+                newTrailer.ID = 0;
+                newTrailer.TrailerNumber = trailersToAdd[i].TrailerNumber;
+                newTrailer.Type = trailersToAdd[i].Type;
+                newTrailer.Load = trailersToAdd[i].Load;
+                newTrailer.Cleanliness = trailersToAdd[i].Cleanliness;
+                newTrailer.FuelLevel = trailersToAdd[i].FuelLevel;
+                newTrailer.Length = trailersToAdd[i].Length;
+                newTrailer.Details = trailersToAdd[i].Details;
+                newTrailer.PossessionID = trailersToAdd[i].PossessionID;
+                newTrailer.OrganizationID = trailersToAdd[i].OrganizationID;
+                newTrailer.InTransit = false;
+                newTrailer.IsDeleted = false;
 
-                _context.UpdateLog.Add(newUpdate);
+                _context.TrailerInfo.Add(newTrailer);
 
-                return _context.SaveChanges() != 0;
+
+                if (_context.SaveChanges() != 0)
+                {
+                    UpdateLogModel newUpdate = new UpdateLogModel();
+                    newUpdate.ID = 0;
+                    newUpdate.YardID = newTrailer.PossessionID;
+                    newUpdate.UserID = driverID;
+                    newUpdate.OrganizationID = newTrailer.OrganizationID;
+                    DateTime currentTime = DateTime.UtcNow;
+                    newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+                    string yardName = _context.YardInfo.SingleOrDefault(yard => yard.ID == newTrailer.PossessionID).Name;
+                    newUpdate.Details = $"Trailer #{newTrailer.TrailerNumber} Added to {yardName}";
+
+                    _context.UpdateLog.Add(newUpdate);
+
+                    result = _context.SaveChanges() != 0;
+                }
+
             }
-            
+
             return result;
         }
 
@@ -106,11 +111,11 @@ namespace backendFF.Services
             newUpdate.Details = $"Trailer #{trailerToUpdate.TrailerNumber} Changed To {driverID} From {yardName}";
 
             _context.UpdateLog.Add(newUpdate);
-            if(_context.SaveChanges() != 0)
+            if (_context.SaveChanges() != 0)
             {
                 result = UpdateTrailer(trailerToUpdate);
             }
-            
+
             return result;
         }
 
@@ -133,11 +138,11 @@ namespace backendFF.Services
             newUpdate.Details = $"Trailer #{trailerToUpdate.TrailerNumber} Added To {yardName} From {driverID}";
 
             _context.UpdateLog.Add(newUpdate);
-            if(_context.SaveChanges() != 0)
+            if (_context.SaveChanges() != 0)
             {
                 result = UpdateTrailer(trailerToUpdate);
             }
-            
+
             return result;
         }
 
@@ -156,11 +161,11 @@ namespace backendFF.Services
             newUpdate.Details = $"Trailer #{trailerToDelete.TrailerNumber} Deleted By {userID}";
 
             _context.UpdateLog.Add(newUpdate);
-            if(_context.SaveChanges() != 0)
+            if (_context.SaveChanges() != 0)
             {
                 result = UpdateTrailer(trailerToDelete);
             }
-            
+
             return result;
         }
     }
