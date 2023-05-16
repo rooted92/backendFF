@@ -144,6 +144,20 @@ namespace backendFF.Services
 
             return userInfo;
         }
+         public UserInfoDTO GetUserInfoByID(int userID)
+        {
+            UserModel foundUser = GetUserById(userID);
+            UserInfoDTO userInfo = new UserInfoDTO();
+            userInfo.ID = foundUser.ID;
+            userInfo.Name = foundUser.Name;
+            userInfo.Email = foundUser.Email;
+            userInfo.PhoneNumber = foundUser.PhoneNumber;
+            userInfo.OrganizationID = foundUser.OrganizationID;
+            userInfo.AccountType = foundUser.AccountType;
+            userInfo.IsDarkMode = foundUser.IsDarkMode;
+
+            return userInfo;
+        }
 
         public UserModel GetUserByEmail(string? email)
         {
@@ -216,8 +230,20 @@ namespace backendFF.Services
             return result;
         }
 
-        public bool DeleteUser(UserModel userToDelete)
+        public bool UpdateUserInfo(UserInfoDTO userToUpdate)
         {
+            UserModel foundUser = GetUserById(userToUpdate.ID);
+            foundUser.Name = userToUpdate.Name;
+            foundUser.Email = userToUpdate.Email;
+            foundUser.PhoneNumber = userToUpdate.PhoneNumber;
+            foundUser.IsDarkMode = userToUpdate.IsDarkMode;
+            
+            return UpdateUser(foundUser);
+        }
+
+        public bool DeleteUser(int userID)
+        {
+            UserModel userToDelete = GetUserById(userID);
             userToDelete.IsDeleted = true;
             return UpdateUser(userToDelete);
         }

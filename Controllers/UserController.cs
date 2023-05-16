@@ -78,9 +78,9 @@ namespace backendFF.Controllers
         // Delete User Account (soft delete)
         [HttpPost]
         [Route("DeleteUser")]
-        public bool DeleteUser(UserModel userToDelete)
+        public bool DeleteUser(int userID)
         {
-            return _data.DeleteUser(userToDelete);
+            return _data.DeleteUser(userID);
         }
 
         [HttpGet]
@@ -98,5 +98,18 @@ namespace backendFF.Controllers
             return _data.GetUsersByOrganizationId(organizationID);
         }
 
+        [HttpGet]
+        [Route("GetUserById/{userID}")]
+        public UserInfoDTO GetUserInfoByID(int userID)
+        {
+            return _data.GetUserInfoByID(userID);
+        }
+
+        [HttpPost]
+        [Route("UpdateUserInfo")]
+        public bool UpdateUserInfo(UserInfoDTO userToUpdate)
+        {
+            return _data.UpdateUserInfo(userToUpdate);
+        }
     }
 }
