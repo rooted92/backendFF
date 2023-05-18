@@ -36,26 +36,32 @@ namespace backendFF.Services
                 newTrailer.InTransit = false;
                 newTrailer.IsDeleted = false;
 
-                _context.TrailerInfo.Add(newTrailer);
-
-
-                if (_context.SaveChanges() != 0)
+                List<TrailerModel> foundTrailers = GetTrailersByYardID(newTrailer.PossessionID).ToList();
+                for (int j = 0; j < foundTrailers.Count; j++)
                 {
-                    UpdateLogModel newUpdate = new UpdateLogModel();
-                    newUpdate.ID = 0;
-                    newUpdate.YardID = newTrailer.PossessionID;
-                    newUpdate.UserID = driverID;
-                    newUpdate.OrganizationID = newTrailer.OrganizationID;
-                    DateTime currentTime = DateTime.UtcNow;
-                    newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
-                    string yardName = _context.YardInfo.SingleOrDefault(yard => yard.ID == newTrailer.PossessionID).Name;
-                    newUpdate.Details = $"Trailer #{newTrailer.TrailerNumber} Added to {yardName}";
-
-                    _context.UpdateLog.Add(newUpdate);
-
-                    result = _context.SaveChanges() != 0;
+                    if (newTrailer.TrailerNumber == foundTrailers[j].TrailerNumber)
+                    {
+                        _context.TrailerInfo.Remove(foundTrailers[j]);
+                    }
                 }
+                    _context.TrailerInfo.Add(newTrailer);
 
+                    if (_context.SaveChanges() != 0)
+                    {
+                        UpdateLogModel newUpdate = new UpdateLogModel();
+                        newUpdate.ID = 0;
+                        newUpdate.YardID = newTrailer.PossessionID;
+                        newUpdate.UserID = driverID;
+                        newUpdate.OrganizationID = newTrailer.OrganizationID;
+                        DateTime currentTime = DateTime.UtcNow;
+                        newUpdate.DateUpdated = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+                        string yardName = _context.YardInfo.SingleOrDefault(yard => yard.ID == newTrailer.PossessionID).Name;
+                        newUpdate.Details = $"Trailer #{newTrailer.TrailerNumber} Added to {yardName}";
+
+                        _context.UpdateLog.Add(newUpdate);
+
+                        result = _context.SaveChanges() != 0;
+                    }
             }
 
             return result;
@@ -88,7 +94,7 @@ namespace backendFF.Services
 
         public bool UpdateTrailer(TrailerModel trailerToUpdate)
         {
-            _context.Update<TrailerModel>(trailerToUpdate);
+            _context.TrailerInfo.Update(trailerToUpdate);
             return _context.SaveChanges() != 0;
         }
 

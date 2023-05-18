@@ -33,7 +33,7 @@ namespace backendFF.Services
 
         public UpdateLogModel GetLastYardUpdate(int yardID)
         {
-            return _context.UpdateLog.Last(update => update.YardID == yardID);
+            return _context.UpdateLog.OrderByDescending(p => p.ID).FirstOrDefault(update => update.YardID == yardID);
         }
 
         public IEnumerable<UpdateLogModel> GetUpdatesByOrganizationID(int organizationID)
