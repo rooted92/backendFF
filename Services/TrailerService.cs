@@ -39,10 +39,7 @@ namespace backendFF.Services
                 List<TrailerModel> foundTrailers = GetTrailersByYardID(newTrailer.PossessionID).ToList();
                 for (int j = 0; j < foundTrailers.Count; j++)
                 {
-                    if (newTrailer.TrailerNumber == foundTrailers[j].TrailerNumber)
-                    {
-                        _context.TrailerInfo.Remove(foundTrailers[j]);
-                    }
+                    _context.TrailerInfo.Remove(foundTrailers[j]);
                 }
                     _context.TrailerInfo.Add(newTrailer);
 
