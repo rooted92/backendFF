@@ -76,8 +76,8 @@ namespace backendFF.Controllers
         }
 
         // Delete User Account (soft delete)
-        [HttpPost]
-        [Route("DeleteUser")]
+        [HttpGet]
+        [Route("DeleteUser/{userID}")]
         public bool DeleteUser(int userID)
         {
             return _data.DeleteUser(userID);
